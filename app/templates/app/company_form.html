@@ -1,0 +1,28 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>Edit company</title>
+{% endblock %}
+
+{% block content %}
+<form class="company-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.logo_img }}
+
+    <span id="name_l">{{ form.name.label_tag }}</span>
+    {{ form.name }}
+
+    <span id="description_l">{{ form.description.label_tag }}</span>
+    {{ form.description }}
+
+    <span id="city_l">{{ form.city.label_tag }}</span>
+    {{ form.city }}
+
+    <span id="site_l">{{ form.site.label_tag }}</span>
+    {{ form.site }}
+    <span id="site_help">{{ form.site.help_text }}</span>
+
+    <input class="submit-button" type="submit" value="Save">
+</form>
+{% endblock %}

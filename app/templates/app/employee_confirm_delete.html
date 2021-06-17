@@ -1,0 +1,19 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>Are you sure?</title>
+{% endblock %}
+
+{% block content %}
+<h1>Delete Employee</h1>
+
+<strong>Are you sure you want to fire {{ employee.user }}<br> from {{ employee.company }}?</strong>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <input class="delete-button" type="submit" value="Yes, delete.">
+</form>
+
+
+{% endblock %}

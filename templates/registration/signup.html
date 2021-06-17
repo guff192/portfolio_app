@@ -1,0 +1,23 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>Sign Up</title>
+{% endblock %}
+
+{% block content %}
+<h1>Sign up</h1>
+<form class="login" method="post">
+    {% csrf_token %}
+
+    <span id="username_l">{{ form.username.label_tag }}</span>
+    {{ form.username }}
+
+    <span id="password1_l">{{ form.password1.label_tag }}</span>
+    {{ form.password1 }}
+
+    <span id="password2_l">{{ form.password2.label_tag }}</span>
+    {{ form.password2 }}
+
+    <input class="submit-button" type="submit" value="Sign up">
+</form>
+{% endblock %}

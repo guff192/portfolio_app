@@ -1,0 +1,23 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>Companies</title>
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<a href="{% url 'create-company' %}" class="create-button">Create company</a>
+{% endif %}
+
+<ul class="companies-list" id="{{ companies_set_id }}">
+    {% verbatim %}
+    <li class="company-list-item" v-for="company in companies">
+        <a :href="company.get_absolute_url" :title="company.name">
+            <img :src="company.logo_src" onerror="this.src='/static/img/logo/no-logo-min.png'">
+            <p>{{ company.name }}</p>
+        </a>
+    </li>
+    {% endverbatim %}
+</ul>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>Edit project</title>
+{% endblock %}
+
+{% block content %}
+<form class="project-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.logo_img }}
+
+    <span id="name_l">{{ form.name.label_tag }}</span>
+    {{ form.name }}
+
+    <span id="description_l">{{ form.description.label_tag }}</span>
+    {{ form.description }}
+
+    <span id="company_l">{{ form.company.label_tag }}</span>
+    {{ form.company }}
+
+    <input class="submit-button" type="submit" value="Save">
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>Projects</title>
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<a href="{% url 'create-project' %}" class="create-button">Create project</a>
+{% endif %}
+
+<ul class="projects-list" id="all_projects">
+    {% verbatim %}
+    <li class="project-list-item" v-for="project in projects">
+        <a :href="project.get_absolute_url ">
+            <img :src="project.logo_src" onerror="this.src='/static/img/logo/no-logo-min.png'">
+            <p>{{ project.name }}</p>
+        </a>
+    </li>
+</ul>
+{% endverbatim %}
+
+{% endblock %}

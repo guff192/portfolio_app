@@ -1,0 +1,24 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>Edit employee</title>
+{% endblock %}
+
+{% block content %}
+
+<form class="employee-form" method="post">
+    {% csrf_token %}
+
+    <span id="company_l">{{ form.company.label_tag }}</span>
+    {{ form.company }}
+
+    <span id="user_l">{{ form.user.label_tag }}</span>
+    {{ form.user }}
+
+    <span id="role_l">{{ form.role.label_tag }}</span>
+    {{ form.role }}
+
+
+    <input class="submit-button" type="submit" value="Save">
+</form>
+{% endblock %}

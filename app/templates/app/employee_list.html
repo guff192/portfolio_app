@@ -1,0 +1,29 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>{{ company.name }} employees</title>
+{% endblock %}
+
+{% block content %}
+<h1>Employees</h1>
+
+
+<section id="company_employees">
+    <h2>Company: <a href="{% url 'company-detail' company.pk %}">{{ company.name }}</a></h2>
+
+    {% if is_company_owner %}
+    <a href="{% url 'add-employee' company.pk %}" class="create-button">Add employee</a>
+    {% endif %}
+
+    {% verbatim %}
+
+    <ul class="employees-list">
+        <li v-for="employee in employees">
+            <p>{{ employee.user }} ({{ employee.role_name }})<a :href="'/app/delete_employee/' + employee.id">Delete</a>
+            </p>
+        </li>
+    </ul>
+</section>
+{% endverbatim %}
+
+{% endblock %}

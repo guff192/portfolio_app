@@ -1,0 +1,58 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>{{ company }}</title>
+{% endblock %}
+
+{% block content %}
+<div id="company">
+    <h1>{{ company.name }}</h1>
+
+    {% if is_employee %}
+    <div class="edit-buttons">
+        <a href="{% url 'company-employees' company.pk %}" class="employees-button">Employees</a>
+        {% if is_company_owner %}
+        <a href="{% url 'edit-company' company.pk %}" class="edit-button">Edit company</a>
+        <a href="{% url 'delete-company' company.pk %}" class="delete-button">Delete company</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <section class="info">
+        <article class="description">{{ company.description|linebreaks|urlizetrunc:35 }}</article>
+        <article class="meta-info">
+            {% load static %}
+            <img src="{{ company.logo_src }}" alt="{{ company.name }}"
+                 onerror="this.src='/static/img/logo/no-logo.png'">
+            {% if company.city %}<p>Location: <br>{{ company.city }}</p>{% endif %}
+            {% if company.site %}<p>Site: <br><a href="{{ company.site }}" target="_blank">{{ company.site }}</a></p>{%
+            endif %}
+            {% if company.phone %}<p>Phone: <br><a href="tel:{{ company.phone }}">{{ company.phone }}</a></p>{% endif %}
+            {% if company.email %}<p>Phone: <br><a href="mailto:{{ company.email }}">{{ company.email }}</a></p>{% endif
+            %}
+            {% if company.telegram %}<p>Telegram: <br><a href="https://t.me/{{ company.telegram }}">@{{ company.telegram
+            }}</a></p>{% endif %}
+        </article>
+    </section>
+
+    {% if is_employee %}
+    <div class="edit-buttons">
+        <a href="{% url 'create-project' %}?company={{ company.pk }}" class="edit-button">Create project</a>
+    </div>
+    {% endif %}
+
+    {% verbatim %}
+    <section id="company_projects">
+        <h2>Проекты</h2>
+        <ul class="projects-list">
+            <li class="project-list-item" v-for="project in projects">
+                <a :href="project.get_absolute_url ">
+                    <img :src="project.logo_src" onerror="this.src='/static/img/logo/no-logo-min.png'">
+                    <p>{{ project.name }}</p>
+                </a>
+            </li>
+        </ul>
+    </section>
+    {% endverbatim %}
+</div>
+{% endblock %}

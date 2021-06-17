@@ -1,0 +1,28 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+<title>{{ project.name }}</title>
+{% endblock %}
+
+
+{% block content %}
+<h1>{{ project.name }}</h1>
+
+{% if is_company_employee %}
+<div class="edit-buttons">
+    <a href="{% url 'edit-project' project.pk %}" class="edit-button">Edit project</a>
+    {% if is_company_owner %}
+    <a href="{% url 'delete-project' project.pk %}" class="delete-button">Delete project</a>
+    {% endif %}
+</div>
+{% endif %}
+
+<section class="info">
+    <article class="description">{{ project.description|linebreaks|urlizetrunc:35 }}</article>
+    <article class="meta-info">
+        {% load static %}
+        <img src="{{ project.logo_src }}" onerror="this.src='/static/img/logo/no-logo.png'">
+        <p>Company: <br><a href="{% url 'company-detail' project.company.pk %}">{{ project.company }}</a></p>
+    </article>
+</section>
+{% endblock %}

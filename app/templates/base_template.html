@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>Portfolio App</title>{% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="box">
+    <div id="header">
+        <div class="user">
+            {% if user.is_authenticated %}
+            {{ user.username }}
+            <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'sign-up' %}">Sign Up</a>
+            {% endif %}
+        </div>
+        <div class="cover"></div>
+    </div>
+
+    <div id="nav-sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="{% url 'companies-list' %}">Companies</a></li>
+            <li><a href="{% url 'projects-list' %}">Projects</a></li>
+            <li><a href="{% url 'my-companies' %}">My companies</a></li>
+        </ul>
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div id="footer">footer</div>
+</div>
+
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
