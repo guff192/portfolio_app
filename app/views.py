@@ -48,8 +48,10 @@ def projects_list(request):
 def company_employees(request, pk):
     company = Company.objects.get(id=pk)
     if company.employees.filter(role__in=('o', 'e')).filter(user__exact=request.user):
-        context = {'company': company,
-            'is_company_owner': bool(company.employees.filter(role__exact='o').filter(user__exact=request.user)), }
+        context = {
+            'company': company,
+            'is_company_owner': bool(company.employees.filter(role__exact='o').filter(user__exact=request.user)),
+        }
         return render(request, 'app/employee_list.html', context)
     else:
         return HttpResponseForbidden(
@@ -74,9 +76,11 @@ class ProjectDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectDetailView, self).get_context_data(**kwargs)
         context['is_company_owner'] = bool(
-            self.get_object().company.employees.filter(role__exact='o').filter(user__exact=self.request.user))
+            self.get_object().company.employees.filter(role__exact='o').filter(user__exact=self.request.user)
+        )
         context['is_company_employee'] = bool(
-            self.get_object().company.employees.filter(role__in=('o', 'e')).filter(user__exact=self.request.user))
+            self.get_object().company.employees.filter(role__in=('o', 'e')).filter(user__exact=self.request.user)
+        )
         return context
 
 
@@ -130,14 +134,18 @@ class CompanyUpdateView(PermissionRequiredMixin, generic.UpdateView):
     form_class = CompanyForm
 
     def has_permission(self):
-        return bool(self.get_object().employees.filter(role__exact='o').filter(user__exact=self.request.user))
+        return bool(
+            self.get_object().employees.filter(role__exact='o').filter(user__exact=self.request.user)
+        )
 
 
 class CompanyDeleteView(PermissionRequiredMixin, generic.DeleteView):
     model = Company
 
     def has_permission(self):
-        return bool(self.get_object().employees.filter(role__exact='o').filter(user__exact=self.request.user))
+        return bool(
+            self.get_object().employees.filter(role__exact='o').filter(user__exact=self.request.user)
+        )
 
 
 class ProjectCreateView(generic.CreateView, LoginRequiredMixin):
@@ -165,14 +173,17 @@ class ProjectUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
     def has_permission(self):
         return bool(
-            self.get_object().company.employees.filter(role__in=('o', 'e')).filter(user__exact=self.request.user))
+            self.get_object().company.employees.filter(role__in=('o', 'e')).filter(user__exact=self.request.user)
+        )
 
 
 class ProjectDeleteView(PermissionRequiredMixin, generic.DeleteView):
     model = Project
 
     def has_permission(self):
-        return bool(self.get_object().company.employees.filter(role__exact='o').filter(user__exact=self.request.user))
+        return bool(
+            self.get_object().company.employees.filter(role__exact='o').filter(user__exact=self.request.user)
+        )
 
 
 class EmployeeCreateView(PermissionRequiredMixin, generic.CreateView):
