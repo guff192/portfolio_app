@@ -63,10 +63,15 @@ class CompanyDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CompanyDetailView, self).get_context_data(**kwargs)
+
         context['is_company_owner'] = bool(
-            self.get_object().employees.filter(role__exact='o').filter(user__exact=self.request.user))
+            self.request.user.is_authenticated and
+            self.get_object().employees.filter(role__exact='o').filter(user__exact=self.request.user)
+        )
         context['is_employee'] = bool(
-            self.get_object().employees.filter(role__in=('o', 'e')).filter(user__exact=self.request.user))
+            self.request.user.is_authenticated and
+            self.get_object().employees.filter(role__in=('o', 'e')).filter(user__exact=self.request.user)
+        )
         return context
 
 
@@ -76,9 +81,11 @@ class ProjectDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectDetailView, self).get_context_data(**kwargs)
         context['is_company_owner'] = bool(
+            self.request.user.is_authenticated and
             self.get_object().company.employees.filter(role__exact='o').filter(user__exact=self.request.user)
         )
         context['is_company_employee'] = bool(
+            self.request.user.is_authenticated and
             self.get_object().company.employees.filter(role__in=('o', 'e')).filter(user__exact=self.request.user)
         )
         return context
@@ -118,9 +125,11 @@ class MyCompaniesView(ListAPIView):
         return Company.objects.filter(employees__user__exact=self.request.user)
 
 
-class CompanyCreateView(generic.CreateView, LoginRequiredMixin):
+class CompanyCreateView(LoginRequiredMixin, generic.CreateView):
     model = Company
     form_class = CompanyForm
+    login_url = '/auth/login/'
+
 
     def form_valid(self, form):
         company = form.save()

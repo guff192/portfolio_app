@@ -24,14 +24,13 @@
             {% load static %}
             <img src="{{ company.logo_src }}" alt="{{ company.name }}"
                  onerror="this.src='/static/img/logo/no-logo.png'">
+
             {% if company.city %}<p>Location: <br>{{ company.city }}</p>{% endif %}
-            {% if company.site %}<p>Site: <br><a href="{{ company.site }}" target="_blank">{{ company.site }}</a></p>{%
-            endif %}
+            {% if company.site %}<p>Site: <br><a href="{{ company.site }}" target="_blank">{{ company.site }}</a></p>{% endif %}
             {% if company.phone %}<p>Phone: <br><a href="tel:{{ company.phone }}">{{ company.phone }}</a></p>{% endif %}
-            {% if company.email %}<p>Phone: <br><a href="mailto:{{ company.email }}">{{ company.email }}</a></p>{% endif
-            %}
-            {% if company.telegram %}<p>Telegram: <br><a href="https://t.me/{{ company.telegram }}">@{{ company.telegram
-            }}</a></p>{% endif %}
+            {% if company.email %}<p>Phone: <br><a href="mailto:{{ company.email }}">{{ company.email }}</a></p>{% endif %}
+            {% if company.telegram %}<p>Telegram: <br><a href="https://t.me/{{ company.telegram }}">@{{ company.telegram }}</a></p>{% endif %}
+
         </article>
     </section>
 

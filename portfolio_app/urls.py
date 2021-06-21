@@ -21,8 +21,10 @@ from django.views.generic import RedirectView
 
 from app.views import signup
 
-urlpatterns = [path('admin/', admin.site.urls), path('', RedirectView.as_view(url='app/', permanent=True)),
+urlpatterns = [
+    path('admin/', admin.site.urls), path('', RedirectView.as_view(url='app/', permanent=True)),
     path('app/', include('app.urls')), path('auth/', include('django.contrib.auth.urls')),
-    path('auth/signup/', signup, name='sign-up'), ]
+    path('auth/signup/', signup, name='sign-up'),
+]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
